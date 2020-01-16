@@ -11,12 +11,37 @@ export class AppComponent {
   includeLetters = false;
   includeNumbers = false;
   includeSymbols = false;
+  length = 0;
+
+  OnChangeLength(value: string) {
+    const parsedValue = parseInt(value);
+    if (!isNaN(parsedValue)) {
+      this.length = parsedValue;
+    }
+  }
 
   onButtonClick() {
-    console.log(this.includeLetters);
-    console.log(this.includeNumbers);
-    console.log(this.includeSymbols);
-    this.password = "This is my Password";
+    const numbers = "1234567890";
+    const letters = "abcdefghijklmnopqrstuvwyz";
+    const symbols = "!@#$%^*()";
+    let validChars = "";
+
+    if (this.includeLetters) {
+      validChars += letters;
+    }
+    if (this.includeNumbers) {
+      validChars += numbers;
+    }
+    if (this.includeSymbols) {
+      validChars += symbols;
+    }
+
+    let generatedPassWord = "";
+    for (let i = 0; i < this.length; i++) {
+      const index = Math.floor(Math.random() * validChars.length);
+      generatedPassWord += validChars[index];
+    }
+    this.password = generatedPassWord;
   }
 
   onChangeUseLetters() {
